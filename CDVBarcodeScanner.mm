@@ -342,7 +342,7 @@ parentViewController:(UIViewController*)parentViewController
 
 //    self.captureSession = nil;
 //    self.previewLayer = nil;
-    NSString* errorMessage = [self setUpCaptureSession];
+//    NSString* errorMessage = [self setUpCaptureSession];
 //    if (errorMessage) {
 //        [self barcodeScanFailed:errorMessage];
 //        return;
@@ -353,14 +353,15 @@ parentViewController:(UIViewController*)parentViewController
     self.viewController.orientationDelegate = self.plugin.viewController;
 
     // delayed [self openDialog];
-    [self performSelector:@selector(openDialog) withObject:nil afterDelay:1];
+    [self performSelector:@selector(openDialog) withObject:nil afterDelay:0.1];
 }
 
 //--------------------------------------------------------------------------
 - (void)openDialog {
+    [self.viewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [self.parentViewController
      presentViewController:self.viewController
-     animated:self.isTransitionAnimated completion:nil
+     animated:YES completion:nil
      ];
 }
 
@@ -1100,25 +1101,6 @@ parentViewController:(UIViewController*)parentViewController
     result = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return result;
-}
-
-- (void)startAnimation
-{
-    
-//    self.scanLineCons.constant = 0;
-    [self.view layoutIfNeeded];
-    
-    
-    
-    [UIView animateWithDuration:2.0 animations:^{
-        
-//        self.scanLineCons.constant = self.containerHeightCons.constant;
-        
-        [UIView setAnimationRepeatCount:MAXFLOAT];
-        
-        
-        [self.view layoutIfNeeded];
-    }];
 }
 
 

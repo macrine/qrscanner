@@ -1,7 +1,4 @@
 # qrscan
-cordova二维码扫描插件，基于phonegap-plugin-barcodescanner插件的界面修改，仿微信
-
---------------------------------
 
 插件源代码：
 https://github.com/phonegap/phonegap-plugin-barcodescanner  

@@ -1,5 +1,5 @@
 # qrscan
-基于phonegap-plugin-barcodescanner插件的界面修改，仿微信
+cordova二维码扫描插件，基于phonegap-plugin-barcodescanner插件的界面修改，仿微信
 
 --------------------------------
 

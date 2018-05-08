@@ -850,9 +850,9 @@ parentViewController:(UIViewController*)parentViewController
     overlayView.opaque              = NO;
     
     
-    CGFloat scanAreaSize =240;
+    CGFloat scanAreaSize =260;
     CGFloat scanAreaPositionX =(bounds.size.width-scanAreaSize)/2;
-    CGFloat scanAreaPositionY =(bounds.size.height-scanAreaSize)/2;
+    CGFloat scanAreaPositionY =(bounds.size.height-scanAreaSize)/2-30;
     CGFloat cornerSize =14;
     
     CGRect myRect =CGRectMake(scanAreaPositionX,scanAreaPositionY,scanAreaSize, scanAreaSize);

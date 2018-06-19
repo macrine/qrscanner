@@ -1001,101 +1001,11 @@ parentViewController:(UIViewController*)parentViewController
     self.toolbar = [[UIToolbar alloc] init];
     self.toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
-    
-    
-    CGFloat scanAreaSize =260;
-    CGFloat scanAreaPositionX =(bounds.size.width-scanAreaSize)/2;
-    CGFloat scanAreaPositionY =(bounds.size.height-scanAreaSize)/2-30;
-    CGFloat cornerSize =14;
-    
-    CGRect myRect =CGRectMake(scanAreaPositionX,scanAreaPositionY,scanAreaSize, scanAreaSize);
-    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:bounds cornerRadius:0];
-    UIBezierPath *squarePath = [UIBezierPath bezierPathWithRoundedRect:myRect cornerRadius:0];
-    [path appendPath:squarePath];
-    [path setUsesEvenOddFillRule:YES];
-    
-    CAShapeLayer *fillLayer = [CAShapeLayer layer];
-    fillLayer.path = path.CGPath;
-    fillLayer.fillRule = kCAFillRuleEvenOdd;
-    fillLayer.fillColor = [UIColor blackColor].CGColor;
-    fillLayer.opacity = 0.4;
-    [overlayView.layer addSublayer:fillLayer];
-    
-    CAShapeLayer *borderLayer = [CAShapeLayer layer];
-    borderLayer.path = squarePath.CGPath;
-    borderLayer.fillColor = [UIColor clearColor].CGColor;
-    borderLayer.strokeColor = [UIColor whiteColor].CGColor;
-    borderLayer.opacity=0.6;
-    [overlayView.layer addSublayer:borderLayer];
-    
-    UIBezierPath *cornerPath = [UIBezierPath bezierPath];
-    [cornerPath moveToPoint:CGPointMake(scanAreaPositionX,scanAreaPositionY+cornerSize)];
-    [cornerPath addLineToPoint:CGPointMake(scanAreaPositionX,scanAreaPositionY)];
-    [cornerPath addLineToPoint:CGPointMake(scanAreaPositionX+cornerSize,scanAreaPositionY)];
-    
-    [cornerPath moveToPoint:CGPointMake(scanAreaPositionX+scanAreaSize-cornerSize,scanAreaPositionY)];
-    [cornerPath addLineToPoint:CGPointMake(scanAreaPositionX+scanAreaSize,scanAreaPositionY)];
-    [cornerPath addLineToPoint:CGPointMake(scanAreaPositionX+scanAreaSize,scanAreaPositionY+cornerSize)];
-    
-    [cornerPath moveToPoint:CGPointMake(scanAreaPositionX+scanAreaSize,scanAreaPositionY+scanAreaSize-cornerSize)];
-    [cornerPath addLineToPoint:CGPointMake(scanAreaPositionX+scanAreaSize,scanAreaPositionY+scanAreaSize)];
-    [cornerPath addLineToPoint:CGPointMake(scanAreaPositionX+scanAreaSize-cornerSize,scanAreaPositionY+scanAreaSize)];
-    
-    [cornerPath moveToPoint:CGPointMake(scanAreaPositionX+cornerSize,scanAreaPositionY+scanAreaSize)];
-    [cornerPath addLineToPoint:CGPointMake(scanAreaPositionX,scanAreaPositionY+scanAreaSize)];
-    [cornerPath addLineToPoint:CGPointMake(scanAreaPositionX,scanAreaPositionY+scanAreaSize-cornerSize)];
-    
-    CAShapeLayer *cornerLayer = [CAShapeLayer layer];
-    cornerLayer.lineWidth = 3;
-    cornerLayer.strokeColor = [UIColor colorWithRed:0.1 green:0.67 blue:0.09 alpha:1].CGColor;
-    cornerLayer.path = cornerPath.CGPath;
-    cornerLayer.fillColor = nil;
-    [overlayView.layer addSublayer:cornerLayer];
-    
-    CAGradientLayer *lineLayer =  [CAGradientLayer layer];
-    lineLayer.frame=CGRectMake(scanAreaPositionX+10, scanAreaPositionY+10, scanAreaSize-20, 1);
-    [lineLayer setColors:[NSArray arrayWithObjects:
-                          (id)[[UIColor colorWithRed:0.11 green:0.66 blue:0.02 alpha:0] CGColor],
-                          (id)[[UIColor colorWithRed:0.42 green:0.91 blue:0.2 alpha:0.8] CGColor],
-                          (id)[[UIColor colorWithRed:0.42 green:0.91 blue:0.2 alpha:0.8] CGColor],
-                          (id)[[UIColor colorWithRed:0.11 green:0.66 blue:0.02 alpha:0] CGColor], nil]];
-    [lineLayer setLocations:@[@0.0,@0.3,@0.7,@1.0]];
-    [lineLayer setStartPoint:CGPointMake(0.0, 1.0)];
-    [lineLayer setEndPoint:CGPointMake(1.0, 1.0)];
-    lineLayer.shadowColor = [UIColor yellowColor].CGColor;
-    lineLayer.shadowOffset = CGSizeMake(0,0);
-    lineLayer.shadowOpacity = 1;
-    lineLayer.shadowRadius = 3;
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-    animation.duration = 2;
-    animation.repeatCount = HUGE_VALF;
-    animation.beginTime =CACurrentMediaTime() + 0;
-    animation.byValue = [NSValue valueWithCGPoint:CGPointMake(0,scanAreaSize-10)];
-    [lineLayer addAnimation:animation forKey:@"move-layer"];
-    [overlayView.layer addSublayer:lineLayer];
-    
-    self.toolbar = [[UIToolbar alloc] init];
-    self.toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    
-    id cancelButton = [[UIBarButtonItem alloc]
+    id cancelButton = [[[UIBarButtonItem alloc]
                        initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                        target:(id)self
                        action:@selector(cancelButtonPressed:)
-                       ];
-    
-    UIButton  *button=[UIButton buttonWithType:UIButtonTypeSystem];
-    button.frame=CGRectMake(6, 20, 50, 32);
-    [button setTitle:@"取消" forState:UIControlStateNormal];
-    [button setTintColor: [UIColor whiteColor] ];
-    [button addTarget:(id)self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [overlayView addSubview:button];
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(scanAreaPositionX, scanAreaPositionY+scanAreaSize+10, scanAreaSize, 30)];
-    [overlayView addSubview:label];
-    label.text=@"请将二维码置于取景框内扫描。";
-    label.textColor=[UIColor whiteColor];
-    label.textAlignment=NSTextAlignmentCenter;
-    label.font = [UIFont systemFontOfSize:13];
+                       ] autorelease];
 
 
     id flexSpace = [[[UIBarButtonItem alloc]
@@ -1150,22 +1060,22 @@ parentViewController:(UIViewController*)parentViewController
       [items insertObject:torchButton atIndex:0];
     }
   }
-//    self.toolbar.items = items;
-//    [overlayView addSubview: self.toolbar];
-//
-//    UIImage* reticleImage = [self buildReticleImage];
-//    self.reticleView = [[[UIImageView alloc] initWithImage:reticleImage] autorelease];
-//
-//    self.reticleView.opaque           = NO;
-//    self.reticleView.contentMode      = UIViewContentModeScaleAspectFit;
-//    self.reticleView.autoresizingMask = (UIViewAutoresizing) (0
-//        | UIViewAutoresizingFlexibleLeftMargin
-//        | UIViewAutoresizingFlexibleRightMargin
-//        | UIViewAutoresizingFlexibleTopMargin
-//        | UIViewAutoresizingFlexibleBottomMargin)
-//    ;
-//
-//    [overlayView addSubview: self.reticleView];
+    self.toolbar.items = items;
+    [overlayView addSubview: self.toolbar];
+
+    UIImage* reticleImage = [self buildReticleImage];
+    self.reticleView = [[[UIImageView alloc] initWithImage:reticleImage] autorelease];
+
+    self.reticleView.opaque           = NO;
+    self.reticleView.contentMode      = UIViewContentModeScaleAspectFit;
+    self.reticleView.autoresizingMask = (UIViewAutoresizing) (0
+        | UIViewAutoresizingFlexibleLeftMargin
+        | UIViewAutoresizingFlexibleRightMargin
+        | UIViewAutoresizingFlexibleTopMargin
+        | UIViewAutoresizingFlexibleBottomMargin)
+    ;
+
+    [overlayView addSubview: self.reticleView];
     [self resizeElements];
     return overlayView;
 }
